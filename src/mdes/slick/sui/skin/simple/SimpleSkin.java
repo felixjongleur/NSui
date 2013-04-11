@@ -100,14 +100,14 @@ public class SimpleSkin implements Skin {
             checkBoxImage = tryImage("res/skin/simple/checkbox.png");
         if (closeButtonImage==null)
             closeButtonImage = tryImage("res/skin/simple/closewindow.png");
-        if (selectCursor==null) 
-            selectCursor = tryCursor("res/skin/shared/cursor_select.png", 4, 8);
-            //selectCursor = tryCursor("res/skin/shared/cursor_hand.png", 6, 0);
+//        if (selectCursor==null) 
+//            selectCursor = tryCursor("res/skin/shared/cursor_hand.png", 6, 0);
+//            selectCursor = tryCursor("res/skin/shared/cursor_select.png", 4, 8);
         //if (resizeCursor==null)
         //    resizeCursor = tryCursor("res/skin/shared/cursor_resize.png", 4, 4);
         
-        if (selectCursorListener==null && selectCursor!=null)
-            selectCursorListener = new CursorListener(selectCursor);
+//        if (selectCursorListener==null && selectCursor!=null)
+//            selectCursorListener = new CursorListener(selectCursor);
         if (resizeCursorListener==null && resizeCursor!=null)
             resizeCursorListener = new CursorListener(resizeCursor);
         

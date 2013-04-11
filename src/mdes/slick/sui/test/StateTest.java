@@ -176,7 +176,7 @@ public class StateTest extends StateBasedGame {
         }
 
 		@Override
-		public void receiveObject(Object arg0) {
+		public void receiveObject(Object object) {
 			// TODO Auto-generated method stub
 			
 		}
@@ -239,7 +239,7 @@ public class StateTest extends StateBasedGame {
         }
 
 		@Override
-		public void receiveObject(Object arg0) {
+		public void receiveObject(Object object) {
 			// TODO Auto-generated method stub
 			
 		}
@@ -294,7 +294,7 @@ public class StateTest extends StateBasedGame {
         }
 
 		@Override
-		public void receiveObject(Object arg0) {
+		public void receiveObject(Object object) {
 			// TODO Auto-generated method stub
 			
 		}

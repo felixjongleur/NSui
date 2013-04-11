@@ -7,11 +7,13 @@
 package mdes.slick.sui.skin.simple;
 
 import mdes.slick.sui.Component;
+import mdes.slick.sui.Skin;
 import mdes.slick.sui.Theme;
 import mdes.slick.sui.skin.SkinUtil;
-import mdes.slick.sui.Skin;
 
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.geom.Rectangle;
+import org.newdawn.slick.geom.RoundedRectangle;
 import org.newdawn.slick.gui.GUIContext;
 
 /**
@@ -21,6 +23,17 @@ import org.newdawn.slick.gui.GUIContext;
 public class SimpleContainerAppearance extends SimpleComponentAppearance {
     
     public void render(GUIContext ctx, Graphics g, Component comp, Skin skin, Theme theme) {
-        SkinUtil.renderComponentBase(g, comp);
+      
+    	Rectangle rect = comp.getAbsoluteBounds();
+    	
+        //check for round rectangles
+        if (SimpleSkin.isRoundRectanglesEnabled()) {            
+        	RoundedRectangle rounded = new RoundedRectangle(0f,0f,0f,0f,5f,15); 
+        	rounded.setBounds(comp.getAbsoluteBounds());
+        	rect = rounded;
+        	g.setAntiAlias(true);
+        }    	
+    	
+    	SkinUtil.renderComponentBase(g, comp, rect);
     }
 }

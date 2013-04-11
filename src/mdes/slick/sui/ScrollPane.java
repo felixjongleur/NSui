@@ -10,6 +10,7 @@ import mdes.slick.sui.event.ChangeEvent;
 import mdes.slick.sui.event.ChangeListener;
 import mdes.slick.sui.skin.ComponentAppearance;
 import mdes.slick.sui.skin.ScrollPaneAppearance;
+
 import org.newdawn.slick.gui.GUIContext;
 
 /**
@@ -27,16 +28,18 @@ public class ScrollPane extends Container implements ScrollConstants {
     
     private ScrollBar horizontalScrollBar = null;
     private ScrollBar verticalScrollBar = null;
+
+    public ScrollBar getVerticalScrollBar() {
+    	return verticalScrollBar;
+    }
     
-    private Component view = null;
+	private Component view = null;
     private Container viewport = new Container();
     
     public static final int CORNER_SIZE = 16;
     
     protected ChangeListener horizListener = new HorizontalChangeListener();
     protected ChangeListener vertListener = new VerticalChangeListener();
-    
-    private Dimension lastSize = null;
     
     public ScrollPane(Component view) {
         this(true);
@@ -219,11 +222,35 @@ public class ScrollPane extends Container implements ScrollConstants {
     protected class VerticalChangeListener implements ChangeListener {
         public void stateChanged(ChangeEvent e) {
             if (view!=null) {
-                float y = Math.min(view.getHeight(), verticalScrollBar.getValue()*-view.getHeight());
+            	System.out.println("------------------------------------------------------------");
+            	System.out.println("view.getHeight() - getHeight() = " + (-(view.getHeight() - getHeight())));
+            	System.out.println("verticalScrollBar.getValue()*-view.getHeight() = " + verticalScrollBar.getValue()*-view.getHeight());
+                float y = Math.max(-(view.getHeight() - getHeight()), verticalScrollBar.getValue()*-view.getHeight());
                 System.out.println(y);
                 view.setY(y);
             }
-            //updateScrollBarShowing();
+            updateScrollBarShowing();
         }
     }
+
+	public void scrollToBottom() {
+		if(view!=null) {
+			if(!verticalScrollBar.getSlider().isValueAdjusting()) {
+				float f = (-(view.getHeight() - getHeight()));
+				view.setY(f);
+				verticalScrollBar.setValue(100);
+			}
+		}
+        updateScrollBarShowing();
+	}
+
+	public void scrollToTop() {
+		if(view!=null) {
+			if(!verticalScrollBar.getSlider().isValueAdjusting()) {
+				view.setY(0f);
+				verticalScrollBar.setValue(-100);
+			}
+		}
+        updateScrollBarShowing();
+	}
 }

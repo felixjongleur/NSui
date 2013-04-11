@@ -141,6 +141,11 @@ public class Label extends Container {
         setSize(getPackedSize());
     }
     
+    public void packImage() {
+    	if(this.image != null)
+    		this.image = getImage().getScaledCopy((int)getWidth(), (int)getHeight());
+    }
+    
     public void setFont(Font f) {
         super.setFont(f);
         this.yoff = getYOffset(getText());

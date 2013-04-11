@@ -36,7 +36,7 @@ public class Slider extends Container implements ScrollConstants {
     /** The space to jump when the track is clicked. */
     private float jumpSpace = .05f;
     
-    private boolean isValueAdjusting = false;
+    private boolean isValueAdjusting = true;
     
     private Timer slideDelay;
         
@@ -74,7 +74,7 @@ public class Slider extends Container implements ScrollConstants {
         TrackListener trackListener = new TrackListener();
         slideDelay = new Timer(80, trackListener);
         slideDelay.setInitialDelay(300);
-        this.addMouseListener(trackListener);
+//        this.addMouseListener(trackListener);
     }
     
     public void updateAppearance() {
@@ -251,11 +251,14 @@ public class Slider extends Container implements ScrollConstants {
             value = 0;
         this.value = value;
         if (old!=this.value) {
+        	isValueAdjusting = true;
             if(orientation==HORIZONTAL) 
                 thumbButton.setX(value*(getWidth()-thumbButton.getWidth()));
             else
                 thumbButton.setY(value*(getHeight()-thumbButton.getHeight()));
             fireStateChanged();
+        } else {
+        	isValueAdjusting = false;
         }
     }
     
@@ -273,6 +276,10 @@ public class Slider extends Container implements ScrollConstants {
     
     public boolean isTrackDown() {
         return trackDown;
+    }
+    
+    public boolean isValueAdjusting() {
+    	return isValueAdjusting;
     }
     
     /**

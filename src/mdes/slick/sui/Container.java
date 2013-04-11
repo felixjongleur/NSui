@@ -26,7 +26,7 @@ public class Container extends Component {
     private ZComparator zCompare = new ZComparator();
     boolean childrenDirty = true;
     private boolean clipEnabled;
-    private ArrayList children = new ArrayList();
+    private ArrayList<Component> children = new ArrayList<Component>();
     protected LayoutManager layout = new StaticLayout();
         
     /**
@@ -34,7 +34,7 @@ public class Container extends Component {
      */
     public Container() {
         this(true);
-        children = new ArrayList();
+        children = new ArrayList<Component>();
     }
     
     /** 
@@ -269,5 +269,14 @@ public class Container extends Component {
 
     public void setClipEnabled(boolean clipEnabled) {
         this.clipEnabled = clipEnabled;
+    }
+    
+    public Component getChildByName(String name) {
+    	for(Component child : children) {
+    		if(child.getName() != null && child.getName().equals(name)) {
+    			return child;
+    		}
+    	}
+    	return this;
     }
 }

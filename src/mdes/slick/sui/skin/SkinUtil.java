@@ -66,16 +66,28 @@ public class SkinUtil {
         return compFont != c.getFont();
     }
     
-    public static void renderComponentBase(Graphics g, Component comp) {
+    public static void renderComponentBase(Graphics g, Component comp, Rectangle rect) {
         Color background = comp.getBackground();
         boolean opaque = comp.isOpaque();
         if (background!=null && opaque) {
             Color old = g.getColor();
             g.setColor(background);
-            Rectangle bounds = comp.getAbsoluteBounds();
-            g.fill(bounds);            
+            g.fill(rect);            
             g.setColor(old);
         }
+    }
+    
+    public static void renderComponentBase(Graphics g, Component comp) {
+    	renderComponentBase(g, comp, comp.getAbsoluteBounds());
+//        Color background = comp.getBackground();
+//        boolean opaque = comp.isOpaque();
+//        if (background!=null && opaque) {
+//            Color old = g.getColor();
+//            g.setColor(background);
+//            Rectangle bounds = comp.getAbsoluteBounds();
+//            g.fill(bounds);            
+//            g.setColor(old);
+//        }
     }
     
     public static void renderLabelBase(Graphics g, Label label, String str, Image image, float textXOff, float textYOff) { 
@@ -115,6 +127,11 @@ public class SkinUtil {
             Font oldFont = g.getFont();
 
             g.setColor(label.isEnabled() ? label.getForeground() : label.getDisabledForeground());
+            
+            if(label.hasFocus()) {
+            	g.setColor(label.getFocusColor());
+            }
+            
             g.setFont(font);
 
             g.drawString(str, (int)x, (int)y);
@@ -133,6 +150,11 @@ public class SkinUtil {
     public static void renderButtonBase(Graphics g, Button button) {
         String text = button.getText();
         Image image = getButtonImage(button);
+        
+        if(button instanceof ToggleButton) {
+        	ToggleButton tb = (ToggleButton)button;
+        	image = getToggleButtonImage(tb);
+        }
         
         int textOff = button.getState()==Button.DOWN ? 0 : TEXT_OFFSET;
         renderLabelBase(g, button, text, image, textOff, textOff);
@@ -178,7 +200,7 @@ public class SkinUtil {
      * <b>DOWN</b>: getDownImage() if it exists, otherwise getImage()
      * <b>ROLLOVER</b>: getRolloverImage() if it exists, otherwise getImage()
      */
-    public static Image getButtonImage(Button button) {
+    public static Image getButtonImage(Button button) {    	
         Image downImage = button.getDownImage();
         Image rolloverImage = button.getRolloverImage();
         switch (button.getState()) {

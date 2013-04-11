@@ -60,7 +60,7 @@ public class TextComponentTest extends BasicGame {
         
         final char DEFAULT_MASK = '*';
                 
-        final TextField field = new TextField("Test", 10);
+        final TextField field = new TextField("Test", 10, null);
         field.setLocation(passBox.getX(), passBox.getY()+passBox.getHeight()+10); 
         field.setMaskCharacter(DEFAULT_MASK);
         display.add(field);
@@ -115,14 +115,14 @@ public class TextComponentTest extends BasicGame {
         ScrollPane pane = new ScrollPane(area);
         pane.setLocation(label.getX(), label.getY()+80);
         pane.setSize(area.getWidth(), area.getHeight());
-        //pane.setOpaque(true);
-        //pane.setBackground(Color.green);
-        /*ScrollBar bar = new ScrollBar(ScrollBar.VERTICAL);
+        pane.setOpaque(true);
+        pane.setBackground(Color.green);
+        ScrollBar bar = new ScrollBar(ScrollBar.VERTICAL);
         bar.setLocation(100, 100);
         bar.setSize(16, 100);
         bar.getSlider().setThumbSize(.10f);
         bar.setBackground(Color.blue);
-        bar.setOpaque(true);*/
+        bar.setOpaque(true);
         display.add(pane);
     }
     

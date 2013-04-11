@@ -35,7 +35,7 @@ import org.newdawn.slick.gui.GUIContext;
  */
 public abstract class Component {
     
-    boolean debugRender = false;
+    public static boolean debugRender = false;
     
     /** The parent of this container, used internally. */
     Container parent = null;
@@ -97,6 +97,8 @@ public abstract class Component {
     
     /** The current foreground color. */
     protected Color foreground = getTheme().getForeground();
+    
+    protected Color focusColor = getTheme().getForeground();
     
     /** The current font. */
     private Font font = Sui.getDefaultFont();
@@ -372,6 +374,7 @@ public abstract class Component {
      */
     public void setForeground(Color c) {
         this.foreground = c;
+        setFocusColor(c);
     }
     
     /**
@@ -381,6 +384,14 @@ public abstract class Component {
      */
     public Color getForeground() {
         return foreground;
+    }
+    
+    public void setFocusColor(Color c) {
+    	this.focusColor = c;
+    }
+    
+    public Color getFocusColor() {
+    	 return focusColor;
     }
     
     /**

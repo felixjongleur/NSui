@@ -237,6 +237,17 @@ public class Button extends Label {
         this.rolloverImage = i;
     }
     
+    @Override
+    public void packImage() {
+    	super.packImage();
+    	if(rolloverImage != null) {
+        	this.rolloverImage = getRolloverImage().getScaledCopy((int)getWidth(), (int)getHeight());
+    	}
+    	if(downImage != null) {
+        	this.downImage = getDownImage().getScaledCopy((int)getWidth(), (int)getHeight());    		
+    	}
+    }
+    
     /**
      * Fires a virtual press. Subclasses may override to react
      * to button press <i>before</i> actions are sent.

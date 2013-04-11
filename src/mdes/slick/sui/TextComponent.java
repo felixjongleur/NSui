@@ -99,8 +99,8 @@ public abstract class TextComponent extends Container {
             this.text = "";
         caretPos = this.text.length();
         if (old!=text) {
-            fireStateChanged();
             textChanged(old);
+            fireStateChanged();
         }
     }
     

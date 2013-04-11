@@ -6,9 +6,9 @@
 
 package mdes.slick.sui;
 
+import mdes.slick.sui.Slider.TrackListener;
 import mdes.slick.sui.event.ActionEvent;
 import mdes.slick.sui.event.ActionListener;
-import mdes.slick.sui.event.ChangeListener;
 import mdes.slick.sui.event.MouseWheelEvent;
 import mdes.slick.sui.event.MouseWheelListener;
 import mdes.slick.sui.skin.ComponentAppearance;
@@ -98,7 +98,7 @@ public class ScrollBar extends Container implements ScrollConstants {
             remove(slider);
             slider.removeMouseWheelListener(incDecListener);
             slider.getThumbButton().removeMouseWheelListener(incDecListener);
-            //slider.getDelayTimer().removeActionListener(delayListener);
+//            slider.getDelayTimer().removeActionListener(delayListener);
             
         }
         if (incButton!=null) {
@@ -132,7 +132,7 @@ public class ScrollBar extends Container implements ScrollConstants {
         //add scroll listeners buttons
         incButton.addActionListener(incDecListener);
         decButton.addActionListener(incDecListener);
-        //slider.getDelayTimer().addActionListener(delayListener);
+//        slider.getDelayTimer().addActionListener(delayListener);
         
         //add the new components to this bar
         add(slider);

@@ -18,7 +18,8 @@ public class ToggleButton extends Button {
     private boolean selected = false;
     private Image selectedImage = null;
     private Image disabledSelectedImage = null;
-    private Image rolloverSelectedImage = null;
+    private Image rolloverSelectedImage = null;   
+    private ToggleButtonGroup group = null;
     
     /**
      * Creates a new instance of ToggleButton
@@ -54,8 +55,12 @@ public class ToggleButton extends Button {
     }
     
     public void press() {
-        selected = !selected;
-        super.press();
+    	if(group != null) {
+        	group.toggleGroup(this);
+        } else {
+        	selected = !selected;   
+        }
+    	super.press();     
     }
     
     public Image getSelectedImage() {
@@ -64,6 +69,7 @@ public class ToggleButton extends Button {
 
     public void setSelectedImage(Image selectedImage) {
         this.selectedImage = selectedImage;
+		this.setDownImage(selectedImage);
     }
     
     public Image getDisabledSelectedImage() {
@@ -80,5 +86,28 @@ public class ToggleButton extends Button {
 
     public void setRolloverSelectedImage(Image rolloverSelectedImage) {
         this.rolloverSelectedImage = rolloverSelectedImage;
+    }    
+
+    @Override
+    public void packImage() {
+    	super.packImage();
+    	if(selectedImage != null) {
+        	this.selectedImage = getRolloverImage().getScaledCopy((int)getWidth(), (int)getHeight());
+    	}
+    	if(disabledSelectedImage != null) {
+        	this.disabledSelectedImage = getDownImage().getScaledCopy((int)getWidth(), (int)getHeight());    		
+    	}
+    	if(rolloverSelectedImage != null) {
+        	this.rolloverSelectedImage = getRolloverImage().getScaledCopy((int)getWidth(), (int)getHeight());
+    	}
     }
+    
+    public ToggleButtonGroup getGroup() {
+		return group;
+	}
+
+	public void setGroup(ToggleButtonGroup group) {
+		group.addToGroup(this);
+		this.group = group;
+	}
 }

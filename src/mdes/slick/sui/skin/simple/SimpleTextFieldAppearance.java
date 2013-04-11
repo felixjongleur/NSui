@@ -60,21 +60,30 @@ public class SimpleTextFieldAppearance extends SimpleTextComponentAppearance {
         TextField field = (TextField)comp;
         boolean hasFocus = field.hasFocus();
         
-        SkinUtil.renderComponentBase(g, comp);
+    	Rectangle rect = comp.getAbsoluteBounds();
+    	
+        //check for round rectangles
+        if (SimpleSkin.isRoundRectanglesEnabled()) {            
+        	RoundedRectangle rounded = new RoundedRectangle(0f,0f,0f,0f,5f,15); 
+        	rounded.setBounds(comp.getAbsoluteBounds());
+        	rect = rounded;
+        }          
+        
+        SkinUtil.renderComponentBase(g, comp, rect);
         
         Color start = theme.getPrimary1();
         Color end = theme.getSecondary1();
                 
-        Rectangle bounds = field.getAbsoluteBounds();
-        float x = bounds.getX();
-        float y = bounds.getY();
-        float mid = bounds.getHeight()/2f;
+//        Rectangle bounds = field.getAbsoluteBounds();
+        float x = rect.getX();
+        float y = rect.getY();
+        float mid = rect.getHeight()/2f;
         
         grad.setStart(0, -mid);
         grad.setEnd(0, mid);
         grad.setStartColor(start);
         grad.setEndColor(end);
-        g.fill(bounds, grad);
+        g.fill(rect, grad);
         
         Rectangle oldClip = g.getClip();
         
@@ -99,7 +108,7 @@ public class SimpleTextFieldAppearance extends SimpleTextComponentAppearance {
         g.translate(tx,0);
                 
         g.setFont(font);
-        g.setClip(bounds);
+        g.setClip(rect);
         g.setColor(field.getForeground());
         g.drawString(value, x+pad.left, y+pad.top);
         
@@ -114,7 +123,7 @@ public class SimpleTextFieldAppearance extends SimpleTextComponentAppearance {
         
         if (field.isBorderRendered()) {
             g.setColor( hasFocus ? theme.getPrimaryBorder2() : theme.getPrimaryBorder1());
-            g.draw(bounds);
+            g.draw(rect);
         }
     }
 }

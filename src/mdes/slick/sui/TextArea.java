@@ -7,9 +7,11 @@
 package mdes.slick.sui;
 
 import java.util.ArrayList;
+
 import mdes.slick.sui.event.KeyAdapter;
 import mdes.slick.sui.event.KeyEvent;
 import mdes.slick.sui.event.KeyListener;
+
 import org.newdawn.slick.AngelCodeFont;
 import org.newdawn.slick.Font;
 import org.newdawn.slick.Input;
@@ -20,14 +22,13 @@ import org.newdawn.slick.Input;
  */
 public class TextArea extends TextComponent {
     
-    private ArrayList lines = new ArrayList();
+    private ArrayList<Line> lines = new ArrayList<Line>();
     
     private boolean wrapEnabled = true;
     private boolean wrapDirty = true;
     private Dimension minSize = new Dimension();
     private boolean resizing = true;
-    
-    private int currentLine = 0;
+    private boolean newLine = true;
     
     protected KeyListener keyListener = new AreaKeyListener();
     
@@ -39,11 +40,6 @@ public class TextArea extends TextComponent {
         this(text, 0, 0);
     }
     
-    public TextArea(int cols, int rows) {
-        this(null, 0, 0);
-    }
-    
-    /** Creates a new instance of SuiTextField */
     public TextArea(String text, int cols, int rows) {
         this();
         setText(text);
@@ -74,6 +70,10 @@ public class TextArea extends TextComponent {
             setSize(width, height);
             getMinimumSize().setSize(width, height);
         }
+    }
+    
+    public TextArea(int cols, int rows) {
+        this(null, cols, rows);
     }
     
     /**
@@ -113,7 +113,7 @@ public class TextArea extends TextComponent {
     }
     
     protected void caretPositionChanged() {
-        //ensureLines();
+        ensureLines();
     }
        
     public int getCurrentLine() {
@@ -144,7 +144,7 @@ public class TextArea extends TextComponent {
             float maxWidth = getWidth()-pad.left-pad.right;
 
             //use clear() instead?
-            lines = new ArrayList();
+            lines = new ArrayList<Line>();
             
             int offset = 0;
             int lastLineLen = 0;
@@ -285,7 +285,7 @@ public class TextArea extends TextComponent {
         }
     }
     
-    /*
+/*    
     protected void drawWrappedString(Graphics g, String text) {
         Color oldColor = g.getColor();
         Font oldFont = g.getFont();
@@ -349,7 +349,7 @@ public class TextArea extends TextComponent {
             String text = getText();
             int caretPos = getCaretPosition();
                     
-            if (key == Input.KEY_ENTER) {
+            if (newLine && key == Input.KEY_ENTER) {
                 char c = '\n';
                 if (text.length() < getMaxChars()) {
                     if (caretPos < text.length()) { //HACK: double adding of '\n' fixes it??
@@ -414,4 +414,12 @@ public class TextArea extends TextComponent {
     public void setMinimumSize(Dimension minSize) {
         this.minSize = minSize;
     }
+
+	public boolean isNewLine() {
+		return newLine;
+	}
+
+	public void setNewLine(boolean newLine) {
+		this.newLine = newLine;
+	}
 }

@@ -27,7 +27,7 @@ public class SimpleTextComponentAppearance extends SimpleContainerAppearance
     
     protected Timer flashTimer = new Timer(500);
         
-    protected boolean renderCaret = false;
+    protected boolean renderCaret = true;
     protected boolean still = false;
     
     protected Timer delayTimer = new Timer(800);

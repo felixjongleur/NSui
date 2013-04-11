@@ -34,21 +34,26 @@ public class TextField extends TextComponent {
     }
     
     public TextField(int cols) {
-        this(null, cols);
+        this(null, cols, null);
     }
     
     public TextField(String text) {
-        this(text, 0);
+        this(text, 0, null);
+    }
+    
+    public TextField(int cols, Font font) {
+    	this(null, cols, font);
+    	setFont(font);
     }
     
     /**
      * Creates a new instance of TextField
      */
-    public TextField(String text, int cols) {
+    public TextField(String text, int cols, Font font) {
         this();
         setText(text);
         this.actionCommand = text;
-        Font f = getFont();
+        Font f = (font == null) ? getFont() : font;
         Padding pad = getPadding();
         if (f!=null) {
             float width = 0;
@@ -181,7 +186,6 @@ public class TextField extends TextComponent {
         public void keyPressed(KeyEvent e) {
             int key = e.getKeyCode();
             if (key == Input.KEY_ENTER) {
-                releaseFocus();
                 fireActionPerformed(actionCommand);
             } else if (key == Input.KEY_HOME) {
                 setCaretPosition(0);

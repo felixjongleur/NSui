@@ -70,7 +70,7 @@ public class Display extends Container {
             Sui.setDefaultFont(context.getDefaultFont());
         
         toolTip.setZIndex(Component.POPUP_LAYER);
-        toolTip.setVisible(false);
+        toolTip.setVisible(true);
         tipShowTimer.setRepeats(false);
         tipHideTimer.setRepeats(false);
         add(toolTip);
@@ -184,8 +184,8 @@ public class Display extends Container {
         super.render(c, g);
         //g.setClip(r);
         g.setColor(Color.white);
-        //g.drawString("ToolTipShow: "+(100*tipShowTimer.getPercent())+"%", 10, 55);
-        //g.drawString("ToolTipShow: "+(100*tipHideTimer.getPercent())+"%", 10, 70);
+//        g.drawString("ToolTipShow: "+(100*tipShowTimer.getPercent())+"%", 10, 55);
+//        g.drawString("ToolTipShow: "+(100*tipHideTimer.getPercent())+"%", 10, 70);
     }
     
     public final void update(GUIContext c, int delta) {
@@ -252,10 +252,21 @@ public class Display extends Container {
         activeWindows.clear();
     }
     
+    public Component getPopUp(Container parent) {        
+        Component popUp = null;
+    	for (int i=parent.getChildCount()-1; i>=0; i--) {
+            Component comp = parent.getChild(i);
+            if(comp.getZIndex() == POPUP_LAYER) {
+            	return comp;
+            }
+        }
+    	return popUp;
+    }
+    
     public Component getDeepestComponentAt(Container parent, int x, int y, boolean checkGlassPane) {
         if (!parent.contains(x, y)) {
             return null;
-        }
+        }        
         
         for (int i=parent.getChildCount()-1; i>=0; i--) {
             Component comp = parent.getChild(i);
@@ -273,6 +284,8 @@ public class Display extends Container {
                     else {
                         return comp;
                     }
+                } else if(comp instanceof Popup) {
+                	return parent;
                 }
             }
         }
@@ -425,8 +438,9 @@ public class Display extends Container {
             if (!isShowing()) {
                 return;
             }
+                            
+            Component comp = getDeepestComponentAt(Display.this, x, y, true);	
             
-            Component comp = getDeepestComponentAt(Display.this, x, y, true);
             if (comp.isGlassPane())
                 comp = comp.getFirstNonGlassPane();
             
