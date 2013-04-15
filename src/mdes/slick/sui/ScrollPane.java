@@ -47,7 +47,7 @@ public class ScrollPane extends Container implements ScrollConstants {
             this.view = view;
             view.setLocation(0f, 0f);
             viewport.add(view);
-            viewport.setLocation(-1f, -1f);
+            viewport.setLocation(0, 0);
             add(viewport);
         }
     }
@@ -57,12 +57,16 @@ public class ScrollPane extends Container implements ScrollConstants {
     }
     
     public void setWidth(float w) {
-        super.setWidth(w);
-        float o = 0;
-        if (verticalScrollBar.isVisible())
-            o = verticalScrollBar.getWidth();
-        viewport.setWidth(w - o);
-        verticalScrollBar.setLocation(w-verticalScrollBar.getWidth(), 0);
+        super.setWidth(w+verticalScrollBar.getWidth());
+//        float o = 0;
+//        if (verticalScrollBar.isVisible())
+//            o = verticalScrollBar.getWidth();
+//        viewport.setWidth(w - o);
+//        verticalScrollBar.setLocation(w-verticalScrollBar.getWidth(), 0);
+
+        // Made these changes to make the scroll bar be outside of the window
+        viewport.setWidth(w+verticalScrollBar.getWidth());
+        verticalScrollBar.setLocation(w, 0);
         //TODO: set minimum size of component
     }
     
@@ -181,8 +185,9 @@ public class ScrollPane extends Container implements ScrollConstants {
         float width = viewport.getWidth();
         float height = viewport.getHeight();
         
-        if (vert) //vertical exists
-            viewport.setWidth(getWidth()-verticalScrollBar.getWidth());
+        // Made these changes to make the scroll bar be outside of the window
+        if (vert) //vertical exists 
+        	viewport.setWidth(getWidth()+verticalScrollBar.getWidth());
         else
             viewport.setWidth(getWidth());
         if (horiz)
