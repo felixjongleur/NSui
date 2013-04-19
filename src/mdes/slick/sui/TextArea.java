@@ -7,12 +7,14 @@
 package mdes.slick.sui;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import mdes.slick.sui.event.KeyAdapter;
 import mdes.slick.sui.event.KeyEvent;
 import mdes.slick.sui.event.KeyListener;
 
 import org.newdawn.slick.AngelCodeFont;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
 import org.newdawn.slick.Input;
 
@@ -226,7 +228,7 @@ public class TextArea extends TextComponent {
                 setHeight(Math.max(getMinimumSize().height, maxHeight));
             }
         }
-    }
+    }    
     
     public int getLineCount() {
         ensureLines();
@@ -247,6 +249,22 @@ public class TextArea extends TextComponent {
         return (Line[])lines.toArray(new Line[lines.size()]);
     }
     
+    public ArrayList<Line> getLinesAsList() {
+    	return lines;
+    }
+    
+    public void addLine(String str) {
+    	addLine(str, null);
+    }
+    
+    public void addLine(String str, Color color) {
+//    	Line defaultLine = getLine(getLineCount()-1);
+//    	Line newLine = new Line(str, defaultLine.yoff, defaultLine.width, defaultLine.height, defaultLine.offset, color);
+//    	lines.add(newLine);
+//    	ensureLines();
+    	setText(getText() + str);
+    }
+    
     public String[] getLinesAsText() {
         ensureLines();
         String[] array = new String[lines.size()];
@@ -263,13 +281,19 @@ public class TextArea extends TextComponent {
         public final float width;
         public final float height;
         public final int offset;
+        public final Color color;
         
         protected Line(String str, float yoff, float width, float height, int offset) {
+        	this(str, yoff, width, height, offset, null);
+        }
+        
+        protected Line(String str, float yoff, float width, float height, int offset, Color color) {
             this.str = str;
             this.yoff = yoff;
             this.width = width;
             this.height = height;
             this.offset = offset;
+            this.color = color;
         }
         
         /**

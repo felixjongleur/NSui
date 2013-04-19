@@ -250,10 +250,14 @@ public class ScrollPane extends Container implements ScrollConstants {
 	}
 
 	public void scrollToTop() {
+		scrollToTop(false);
+	}
+	
+	public void scrollToTop(boolean overrideAdjusting) {
 		if(view!=null) {
-			if(!verticalScrollBar.getSlider().isValueAdjusting()) {
+			if(overrideAdjusting | !verticalScrollBar.getSlider().isValueAdjusting()) {
 				view.setY(0f);
-				verticalScrollBar.setValue(-100);
+				verticalScrollBar.setValue(-1000);
 			}
 		}
         updateScrollBarShowing();

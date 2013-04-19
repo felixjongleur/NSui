@@ -6,12 +6,14 @@
 
 package mdes.slick.sui.skin.simple;
 
-import mdes.slick.sui.Padding;
 import mdes.slick.sui.Component;
+import mdes.slick.sui.Padding;
 import mdes.slick.sui.Skin;
 import mdes.slick.sui.TextArea;
 import mdes.slick.sui.Theme;
 import mdes.slick.sui.skin.SkinUtil;
+
+import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Rectangle;
@@ -66,7 +68,13 @@ public class SimpleTextAreaAppearance extends SimpleTextComponentAppearance {
             float lineHeight = line.height;
             String str = line.str;
             float lineY = (startY+(i*lineHeight));
+            Color color = line.color;
+            Color oldColor = g.getColor();
+            if(color!=null) {
+                g.setColor(color);
+            }                        
             g.drawString(str, (int)startX, (int)lineY);
+            g.setColor(oldColor);
             
             //if this line is where the caret is at, let's draw it
             if (hasFocus && linePos == i && renderCaret) {
